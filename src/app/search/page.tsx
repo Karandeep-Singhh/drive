@@ -5,18 +5,20 @@ import FileTable from "~/components/Drive/FileTable/FileTable";
 import Navbar from "~/components/Drive/Navbar/Navbar";
 import Sidebar from "~/components/Drive/Sidebar/Sidebar";
 import { XCircle } from "lucide-react";
+import { useState } from "react";
 
-export default function SearchPage({
-  searchParams,
-}: {
+type Props = {
   searchParams: { q: string };
-}) {
+};
+
+export default function SearchPage({ searchParams }: Props) {
   const query = searchParams.q || "";
   const searchResults = searchFiles(query);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
-      <Navbar onMenuToggle={() => {}} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
       <Sidebar isOpen={true} />
 
       <main className="flex-1 pl-64">
@@ -25,7 +27,7 @@ export default function SearchPage({
             <div className="mb-6">
               <h1 className="mb-1 text-2xl font-bold">Search Results</h1>
               <p className="text-muted-foreground text-sm">
-                {searchResults.length} results for "{query}"
+                {`${searchResults.length} results for "${query}"`}
               </p>
             </div>
 

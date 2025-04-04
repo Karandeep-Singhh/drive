@@ -5,13 +5,14 @@ import FileTable from "~/components/Drive/FileTable/FileTable";
 import Navbar from "~/components/Drive/Navbar/Navbar";
 import Sidebar from "~/components/Drive/Sidebar/Sidebar";
 import { Share2 } from "lucide-react";
+import { useState } from "react";
 
 export default function SharedPage() {
   const sharedFiles = getSharedFiles();
-
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="bg-background flex min-h-screen flex-col">
-      <Navbar onMenuToggle={() => {}} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
       <Sidebar isOpen={true} />
 
       <main className="flex-1 pl-64">

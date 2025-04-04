@@ -5,13 +5,15 @@ import FileTable from "~/components/Drive/FileTable/FileTable";
 import Navbar from "~/components/Drive/Navbar/Navbar";
 import Sidebar from "~/components/Drive/Sidebar/Sidebar";
 import { Star } from "lucide-react";
+import { useState } from "react";
 
 export default function StarredPage() {
   const starredFiles = getStarredFiles();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
-      <Navbar onMenuToggle={() => {}} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
       <Sidebar isOpen={true} />
 
       <main className="flex-1 pl-64">
@@ -22,7 +24,7 @@ export default function StarredPage() {
               <h1 className="text-2xl font-bold">Starred</h1>
             </div>
             <p className="text-muted-foreground mb-6 text-sm">
-              Files and folders you've marked as important
+              {"Files and folders you've marked as important"}
             </p>
 
             <div className="relative overflow-auto">

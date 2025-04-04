@@ -1,4 +1,7 @@
+"use client";
+
 import type { FC } from "react";
+import { useRouter } from "next/navigation";
 import { MoreHorizontal, Star, XCircle } from "lucide-react";
 import {
   Table,
@@ -29,8 +32,9 @@ type Props = {
 };
 
 const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
+  const router = useRouter();
   // Use provided files or fetch by parentId
-  const files = filesProp || getFilesByParentId(parentId);
+  const files = filesProp ?? getFilesByParentId(parentId);
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("en-US", {
@@ -38,6 +42,13 @@ const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
       day: "numeric",
       year: "numeric",
     }).format(date);
+  };
+
+  const handleFileClick = (file: DriveItem) => {
+    if (file.type === "folder") {
+      router.push(`/folder/${file.id}`);
+    }
+    // For other file types, you could implement preview functionality
   };
 
   return (
@@ -67,7 +78,14 @@ const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
             </TableRow>
           ) : (
             files.map((file) => (
-              <TableRow key={file.id} className="group hover:bg-muted/50">
+              <TableRow
+                key={file.id}
+                className="group hover:bg-muted/50"
+                onClick={() => handleFileClick(file)}
+                style={{
+                  cursor: file.type === "folder" ? "pointer" : "default",
+                }}
+              >
                 <TableCell className="font-medium">
                   <div className="flex items-center gap-3">
                     {getFileIcon(file.type)}
@@ -98,9 +116,9 @@ const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
                 <TableCell>{file.owner === "me" ? "Me" : file.owner}</TableCell>
                 <TableCell>{formatDate(file.lastModified)}</TableCell>
                 <TableCell>
-                  {file.type === "folder" ? "--" : formatBytes(file.size || 0)}
+                  {file.type === "folder" ? "--" : formatBytes(file.size ?? 0)}
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={(e) => e.stopPropagation()}>
                   <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100">
                     <Button
                       variant="ghost"

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Sidebar/Sidebar";
 import FileTable from "./FileTable/FileTable";
+import Breadcrumbs from "./Breadcrumbs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { MOCK_DRIVE_DATA } from "~/lib/mock-data";
 
@@ -41,6 +42,11 @@ const Drive: React.FC<DriveProps> = ({ currentFolderId = "root" }) => {
         className={`flex-1 transition-all ${sidebarOpen ? "pl-64" : "pl-0"}`}
       >
         <div className="container mx-auto p-6 pt-4">
+          {/* Show breadcrumbs when we're viewing a folder */}
+          {currentFolderId !== "root" && (
+            <Breadcrumbs currentFolderId={currentFolderId} />
+          )}
+
           <div className="mb-8">
             <Tabs
               value={activeTab}
@@ -83,7 +89,7 @@ const Drive: React.FC<DriveProps> = ({ currentFolderId = "root" }) => {
                 <div className="mb-6">
                   <h1 className="mb-1 text-2xl font-bold">Starred</h1>
                   <p className="text-muted-foreground text-sm">
-                    Files you've marked as important
+                    {"Files you've marked as important"}
                   </p>
                 </div>
                 <div className="relative overflow-auto">
