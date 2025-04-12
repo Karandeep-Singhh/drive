@@ -4,23 +4,12 @@ import type { FC } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  MenuIcon,
-  Search,
-  HelpCircle,
-  Settings,
-  Grid3X3,
-  User,
-} from "lucide-react";
+import { Search, HelpCircle, Settings, Grid3X3, User } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
-type Props = {
-  onMenuToggle: () => void;
-};
-
-const Navbar: FC<Props> = ({ onMenuToggle }) => {
+const Navbar: FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
 
@@ -36,14 +25,6 @@ const Navbar: FC<Props> = ({ onMenuToggle }) => {
       <div className="flex h-16 items-center px-4">
         {/* Left section */}
         <div className="flex items-center gap-4">
-          <Button
-            onClick={onMenuToggle}
-            variant="ghost"
-            size="icon"
-            className="mr-2"
-          >
-            <MenuIcon className="h-5 w-5" />
-          </Button>
           <Link href="/" className="flex items-center gap-2">
             <svg height="24" viewBox="0 0 24 24" width="24" focusable="false">
               <path

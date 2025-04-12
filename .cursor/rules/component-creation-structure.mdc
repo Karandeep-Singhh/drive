@@ -1,0 +1,30 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+When creating a React component I see components in two ways and i want you to do same.
+1. Component represent a functionality or atleast encapsulate a functionality/feature.
+for example. A component named Profile.tsx represent a functionality that is a Profile meaning all sub components of a Profile such as SideBar main contents etc will be encapsulated by Profile.
+So in such cases whenever such functionality or feature is encountered i want to create a directory of the component and inside I keep the same Component and every sub component or util or the types used comes under same Directory with a index.ts exporting the main component representing the functionality
+Like:
+Profile/
+        Content/
+            Account.tsx
+            Setting.tsx
+            ProfileInfo.tsx
+            Content.tsx
+            index.ts
+        SideBar.tsx
+        Profile.tsx
+        index.ts
+
+2. The component Represents a small portion of a larger functionality.
+For example a SideBar.tsx represent a piece of content of a Profile functionality.
+So such components are to be made as is
+example: 
+Profile/
+        SideBar.tsx
+        Profile.tsx
+        index.ts

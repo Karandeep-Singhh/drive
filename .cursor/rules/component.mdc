@@ -1,0 +1,36 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Keep the component small meaning each sligtly large piece of UI has its own file
+- the naming convention should be Domain oriented
+- the File name for Component Always start with capital leter and further on follows Camel cases
+example: SimpleFilter.tsx ,  CriteriaFilter.tsx, ProfilePage.tsx, ErrorDialogForFailedResponses.tsx etc
+
+- Component props type is always name "Props"
+example:  
+----
+type Props = {
+    title: string
+    onClick: () => void
+}
+
+const CoolButton : FC<Props> = ({ title, onClick }) => {
+    
+}
+-----
+
+- Always use FC type from react to represent type of component.
+
+- Always use const to create component functions
+example: 
+const CoolButton : FC<Props> = ({ title, onClick }) => { }
+
+
+- every component is exported using default export from its file:
+example:
+
+const CoolButton : FC<Props> = ({ title, onClick }) => { }
+
+export default CoolButton
