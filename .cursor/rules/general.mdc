@@ -1,0 +1,29 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+1. create a types.ts for every functionality types that needs to be shared.
+ example:
+ Profile/
+        Profile.tsx
+        index.ts
+        types.ts
+
+2. create a utils.ts for utility functions that needs to be shared for that functionality
+example:
+ Profile/
+        Content/
+            Account.tsx
+            utils.ts
+            Settings.tsx
+        Profile.tsx
+        index.ts
+        utils.ts
+        types.ts
+3. Only create variable functions using const.
+example: const flattenTreeItems = () => {}
+
+4. Always use type instead of interfaces
+
+5. Make use of @catalystone/utils package for shared utilities. for types, functions and components for re-use
