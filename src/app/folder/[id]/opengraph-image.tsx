@@ -8,7 +8,7 @@ export const contentType = "image/png";
 export default async function Image({ params }: { params: { id: string } }) {
   const folderId = params.id;
   const folder = MOCK_DRIVE_DATA.find(
-    (item) => item.id === folderId && item.type === "folder",
+    (item) => item.id === folderId && item.type === "directory",
   );
 
   const folderName = folder?.name ?? "Folder Not Found";

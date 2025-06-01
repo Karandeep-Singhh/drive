@@ -32,7 +32,7 @@ const SearchResults: FC<Props> = ({ q, searchResults }) => {
         </div>
       ) : (
         <div className="relative overflow-auto">
-          <FileTable files={searchResults} />
+          <FileTable tableData={searchResults} />
         </div>
       )}
     </>

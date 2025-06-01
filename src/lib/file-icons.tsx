@@ -15,7 +15,7 @@ import type { FileType } from "./mock-data";
 
 export function getFileIcon(type: FileType) {
   switch (type) {
-    case "folder":
+    case "directory":
       return <Folder className="h-4 w-4 text-blue-500" />;
     case "document":
       return <FileText className="h-4 w-4 text-blue-600" />;
@@ -42,7 +42,7 @@ export function getFileIcon(type: FileType) {
 
 export function getFileColor(type: FileType): string {
   switch (type) {
-    case "folder":
+    case "directory":
       return "text-blue-500";
     case "document":
       return "text-blue-600";

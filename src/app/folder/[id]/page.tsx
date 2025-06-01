@@ -4,19 +4,18 @@ import Drive from "~/components/Drive";
 import { use } from "react";
 
 type Props = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: number }>;
 };
 
 export default async function FolderPage({ params }: Props) {
   const { id } = await params;
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-  const folder = MOCK_DRIVE_DATA.find(
-    (item) => item.id === id && item.type === "folder",
-  );
+  // const folder = MOCK_DRIVE_DATA.find(
+  //   (item) => item.id === id && item.type === "directory",
+  // );
 
-  if (!folder) {
-    notFound();
-  }
+  // if (!folder) {
+  //   notFound();
+  // }
 
-  return <Drive currentFolderId={id} />;
+  return <Drive currentFolderId={+id} />;
 }

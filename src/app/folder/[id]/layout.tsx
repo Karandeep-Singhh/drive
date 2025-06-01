@@ -11,7 +11,7 @@ export async function generateMetadata({
 }: FolderLayoutProps): Promise<Metadata> {
   const folderId = params.id;
   const folder = MOCK_DRIVE_DATA.find(
-    (item) => item.id === folderId && item.type === "folder",
+    (item) => item.id === folderId && item.type === "directory",
   );
 
   if (!folder) {

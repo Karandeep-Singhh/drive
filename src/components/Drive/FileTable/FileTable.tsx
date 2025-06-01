@@ -19,22 +19,15 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { Badge } from "~/components/ui/badge";
-import {
-  formatBytes,
-  getFilesByParentId,
-  type DriveItem,
-} from "~/lib/mock-data";
+import { type DriveItem, formatBytes } from "~/lib/mock-data";
 import { getFileIcon } from "~/lib/file-icons";
 
 type Props = {
-  parentId?: string | null;
-  files?: DriveItem[];
+  tableData: DriveItem[];
 };
 
-const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
+const FileTable: FC<Props> = ({ tableData }) => {
   const router = useRouter();
-  // Use provided files or fetch by parentId
-  const files = filesProp ?? getFilesByParentId(parentId);
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("en-US", {
@@ -44,8 +37,8 @@ const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
     }).format(date);
   };
 
-  const handleFileClick = (file: DriveItem) => {
-    if (file.type === "folder") {
+  const handleItemClick = (file: DriveItem) => {
+    if (file.type === "directory") {
       router.push(`/folder/${file.id}`);
     }
     // For other file types, you could implement preview functionality
@@ -64,7 +57,7 @@ const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {files.length === 0 ? (
+          {tableData.length === 0 ? (
             <TableRow>
               <TableCell colSpan={5} className="h-32 text-center">
                 <div className="flex flex-col items-center justify-center gap-2">
@@ -77,13 +70,13 @@ const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
               </TableCell>
             </TableRow>
           ) : (
-            files.map((file) => (
+            tableData.map((file) => (
               <TableRow
-                key={file.id}
+                key={file.type + "_" + file.id}
                 className="group hover:bg-muted/50"
-                onClick={() => handleFileClick(file)}
+                onClick={() => handleItemClick(file)}
                 style={{
-                  cursor: file.type === "folder" ? "pointer" : "default",
+                  cursor: file.type === "directory" ? "pointer" : "default",
                 }}
               >
                 <TableCell className="font-medium">
@@ -113,13 +106,15 @@ const FileTable: FC<Props> = ({ parentId = "root", files: filesProp }) => {
                     )}
                   </div>
                 </TableCell>
-                <TableCell>{file.owner === "me" ? "Me" : file.owner}</TableCell>
-                <TableCell>{formatDate(file.lastModified)}</TableCell>
+                <TableCell>{file.owner}</TableCell>
+                <TableCell>--</TableCell>
                 <TableCell>
-                  {file.type === "folder" ? "--" : formatBytes(file.size ?? 0)}
+                  {file.type === "directory"
+                    ? "--"
+                    : formatBytes(file.size ?? 0)}
                 </TableCell>
                 <TableCell onClick={(e) => e.stopPropagation()}>
-                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100">
+                  <div className="flex items-center gap-2">
                     <Button
                       variant="ghost"
                       size="icon"
