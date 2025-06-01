@@ -1,10 +1,8 @@
 import { useState, type FC, Suspense, use, useEffect } from "react";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
-import { Button } from "~/components/ui/button";
-import { FolderPlus } from "lucide-react";
 import UploadDialog from "../UploadDialog/UploadDialog";
 import FileTable from "../FileTable/FileTable";
-import { type DriveItem, MOCK_DRIVE_DATA } from "~/lib/mock-data";
+import { type DriveItem } from "~/lib/mock-data";
 import Loading from "~/app/loading";
 import { getAllDirUnder } from "~/service/dirService";
 import type { APIDirectory, APIFile } from "~/service/types";
