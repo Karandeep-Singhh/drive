@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
-import { MOCK_DRIVE_DATA } from "~/lib/mock-data";
 import Drive from "~/components/Drive";
-import { use } from "react";
 
 type Props = {
   params: Promise<{ id: number }>;

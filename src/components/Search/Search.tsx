@@ -1,12 +1,12 @@
 "use client";
 
-import { use } from "react";
 import type { FC } from "react";
+import { use } from "react";
 import { searchFiles } from "~/lib/mock-data";
-import TabNavigation from "./TabNavigation";
-import SearchResults from "./SearchResults";
-import { MyDrive, Recent, Shared, Starred, Trash, Storage } from "./TabContent";
 import SearchLayout from "./SearchLayout";
+import SearchResults from "./SearchResults";
+import { MyDrive, Recent, Shared, Starred, Storage, Trash } from "./TabContent";
+import TabNavigation from "./TabNavigation";
 
 type Props = {
   searchParams: Promise<{ q: string }>;

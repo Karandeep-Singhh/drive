@@ -6,7 +6,7 @@ const Starred = () => {
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Starred</h1>
         <p className="text-muted-foreground text-sm">
-          Files you've marked as important
+          Files you&apos;ve marked as starred
         </p>
       </div>
       <div className="relative overflow-auto">

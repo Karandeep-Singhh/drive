@@ -1,19 +1,19 @@
 "use client";
 
-import type { FC } from "react";
+import {} from "react";
 import FileTable from "~/components/Drive/FileTable/FileTable";
 
-const Starred: FC = () => {
+const Starred = () => {
   return (
     <>
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Starred</h1>
         <p className="text-muted-foreground text-sm">
-          Files you've marked as important
+          Files you&apos;ve marked as starred
         </p>
       </div>
       <div className="relative overflow-auto">
-        <FileTable parentId={null} />
+        <FileTable tableData={[]} />
       </div>
     </>
   );

@@ -3,7 +3,6 @@ import {
   type FC,
   type PropsWithChildren,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import { uploadFile } from "~/service/fileService";
@@ -13,7 +12,7 @@ type TUploadContext = {
   uploadAllPendingFiles: () => void;
   clearQueue: () => void;
   removeFile: (itemId: number) => void;
-  addFilesToUpload: (files: File[], parentDirId?: number) => void;
+  addFilesToUpload: (files: File[], parentDirId?: string) => void;
 };
 
 export type UploadItem = {
@@ -22,7 +21,7 @@ export type UploadItem = {
   status: "uploading" | "error" | "success" | "pending";
   progress: number;
   error?: string;
-  parentDirectoryId?: number;
+  parentDirectoryId?: string;
 };
 
 export const UploadContext = createContext<TUploadContext>(
@@ -32,7 +31,7 @@ export const UploadContext = createContext<TUploadContext>(
 const UploadProvider: FC<PropsWithChildren> = ({ children }) => {
   const [uploadQueue, setUploadQueue] = useState<UploadItem[]>([]);
 
-  const addFilesToUpload = (files: File[], parentDirId?: number) => {
+  const addFilesToUpload = (files: File[], parentDirId?: string) => {
     const uploadItems = files.map(
       (f, index) =>
         ({
@@ -69,13 +68,15 @@ const UploadProvider: FC<PropsWithChildren> = ({ children }) => {
     pendingFiles.forEach((item) => {
       setUploadQueue(setProp({ status: "uploading" }, item.id));
 
-      uploadFile(
+      void uploadFile(
         { file: item.file, parentDirId: item.parentDirectoryId },
         (progress) => {
           setUploadQueue(setProp({ progress }, item.id));
         },
       ).then(() => {
         setUploadQueue(setProp({ status: "success" }, item.id));
+      }).catch((error: Error) => {
+        setUploadQueue(setProp({ status: "error", error: error.message }, item.id));
       });
     });
   };

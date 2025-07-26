@@ -11,7 +11,7 @@ import {
   FileCode,
   PresentationIcon,
 } from "lucide-react";
-import type { FileType } from "./mock-data";
+import type { FileType } from "~/service/types";
 
 export function getFileIcon(type: FileType) {
   switch (type) {
