@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { UserProvider } from "~/Providers/UserProvider/UserProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -28,12 +29,37 @@ const geist = Geist({
   variable: "--font-geist-sans",
 });
 
-export default function RootLayout({
+import { cookies } from "next/headers";
+import { pingAuth } from "~/service/authService";
+import type { User } from "~/service/types";
+
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const cookieStore = await cookies()
+  console.log(cookieStore)
+  const token = cookieStore.get("jwt_token")?.value
+  let user: User | null = null
+
+  console.log("the token", token)
+
+  if (token) {
+    try {
+
+      console.log("hitting pingggggg")
+      user = await pingAuth(token)
+    } catch (error) {
+      // Token is invalid or expired
+      console.error(error)
+      user = null
+    }
+  }
+
   return (
     <html lang="en" className={`${geist.variable} dark`}>
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        <UserProvider user={user}>{children}</UserProvider>
+      </body>
     </html>
   );
 }
