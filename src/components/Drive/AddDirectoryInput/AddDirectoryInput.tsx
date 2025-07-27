@@ -6,7 +6,7 @@ import { createDir } from "~/service/dirService";
 import { useDrive } from "~/components/Drive/DriveProvider/useDrive";
 
 type Props = {
-  currentDirId?: number;
+  currentDirId?: string;
 };
 
 const AddDirectoryInput: FC<Props> = ({ currentDirId }) => {
@@ -14,13 +14,13 @@ const AddDirectoryInput: FC<Props> = ({ currentDirId }) => {
   const [newDirName, setNewDirName] = useState("");
   const { addDir } = useDrive();
 
-  const handleCreateDir = (e: any) => {
+  const handleCreateDir = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newDirName.length === 0) return;
     console.log(newDirName, currentDirId);
 
     // TODO need validations on name
-    createDir(newDirName, currentDirId)
+    void createDir(newDirName, currentDirId)
       .then(addDir)
       .finally(() => setEnableDirInput(false));
   };

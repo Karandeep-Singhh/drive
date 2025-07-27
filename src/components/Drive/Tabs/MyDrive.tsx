@@ -1,17 +1,16 @@
-import { useState, type FC, Suspense, use, useEffect } from "react";
+import { useState, type FC, Suspense, useEffect, useCallback } from "react";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import UploadDialog from "../UploadDialog/UploadDialog";
 import FileTable from "../FileTable/FileTable";
-import { type DriveItem } from "~/lib/mock-data";
 import Loading from "~/app/loading";
 import { getAllDirUnder } from "~/service/dirService";
-import type { APIDirectory, APIFile } from "~/service/types";
+import type { APIDirectory, APIFile, DriveItem } from "~/service/types";
 import { getAllFilesUnderDir } from "~/service/fileService";
 import AddDirectoryInput from "~/components/Drive/AddDirectoryInput";
 import { useDrive } from "~/components/Drive/DriveProvider/useDrive";
 
 type Props = {
-  currentDirectoryId?: number;
+  currentDirectoryId?: string;
 };
 const MyDrive: FC<Props> = ({ currentDirectoryId }) => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
@@ -21,32 +20,36 @@ const MyDrive: FC<Props> = ({ currentDirectoryId }) => {
   const [filesUnderDir, setFilesUnderDir] = useState<APIFile[]>([]);
   const { allDirectories } = useDrive();
 
-  const currentDir = currentDirectoryId
-    ? allDirectories.find((item) => item.id == currentDirectoryId)
+  const currentDir: APIDirectory | undefined = currentDirectoryId
+    ? allDirectories.find((item) => item.id === currentDirectoryId)
     : undefined;
 
-  const dirs: DriveItem[] = dirsUnderCurrentDir.map((e) => ({
+  const dirs: DriveItem[] = dirsUnderCurrentDir.map((e: APIDirectory) => ({
     ...e,
     type: "directory",
     owner: "Me",
   }));
 
-  const files: DriveItem[] = filesUnderDir.map((e) => ({
+  const files: DriveItem[] = filesUnderDir.map((e: APIFile) => ({
     ...e,
-    type: "image", //change it via file type from metadata
+    type: "file", //change it via file type from metadata
     owner: "Me",
   }));
 
   const tableData = [...dirs, ...files];
 
-  const getFilesAndDirs = () => {
-    getAllDirUnder(currentDirectoryId).then(setDirsUnderCurrentDir);
-    getAllFilesUnderDir(currentDirectoryId).then(setFilesUnderDir);
-  };
+  const getFilesAndDirs = useCallback(async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    const dirs: APIDirectory[] = await getAllDirUnder(currentDirectoryId);
+    setDirsUnderCurrentDir(dirs);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    const files: APIFile[] = await getAllFilesUnderDir(currentDirectoryId);
+    setFilesUnderDir(files);
+  }, [currentDirectoryId]);
 
   useEffect(() => {
     getFilesAndDirs();
-  }, [allDirectories]);
+  }, [allDirectories, currentDirectoryId, getFilesAndDirs]);
 
   return (
     <Suspense fallback={<Loading />}>
@@ -57,7 +60,7 @@ const MyDrive: FC<Props> = ({ currentDirectoryId }) => {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">
-            {currentDir ? currentDir.name : "My Drive"}
+            {currentDir?.name ?? "My Drive"}
           </h1>
           <p className="text-muted-foreground text-sm">
             {currentDir

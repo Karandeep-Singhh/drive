@@ -1,7 +1,11 @@
-import { storageQuota } from "~/lib/mock-data";
-
+import { formatBytes } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
-import { formatBytes } from "~/lib/mock-data";
+import Link from "next/link";
+
+const storageQuota = {
+  used: 10 * 1024 * 1024 * 1024, // 10 GB
+  total: 15 * 1024 * 1024 * 1024, // 15 GB
+};
 
 const Storage = () => {
 
@@ -37,42 +41,42 @@ const Storage = () => {
                         className="h-auto justify-start p-4"
                         asChild
                     >
-                        <a href="/folder/folder-1">
+                        <Link href="/folder/folder-1">
                             <div>
                                 <h4 className="font-medium">Work Documents</h4>
                                 <p className="text-muted-foreground text-xs">
                                     15 files
                                 </p>
                             </div>
-                        </a>
+                        </Link>
                     </Button>
                     <Button
                         variant="outline"
                         className="h-auto justify-start p-4"
                         asChild
                     >
-                        <a href="/folder/folder-2">
+                        <Link href="/folder/folder-2">
                             <div>
                                 <h4 className="font-medium">Personal</h4>
                                 <p className="text-muted-foreground text-xs">
                                     8 files
                                 </p>
                             </div>
-                        </a>
+                        </Link>
                     </Button>
                     <Button
                         variant="outline"
                         className="h-auto justify-start p-4"
                         asChild
                     >
-                        <a href="/folder/folder-3">
+                        <Link href="/folder/folder-3">
                             <div>
                                 <h4 className="font-medium">Photos</h4>
                                 <p className="text-muted-foreground text-xs">
                                     32 files
                                 </p>
                             </div>
-                        </a>
+                        </Link>
                     </Button>
                 </div>
             </div>

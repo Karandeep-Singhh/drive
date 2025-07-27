@@ -10,21 +10,21 @@ import {
 } from "react";
 import { getAllDirs } from "~/service/dirService";
 
-type TDriveContext = {
+export type TDriveContext = {
   allDirectories: APIDirectory[];
   setAllDirectories: Dispatch<SetStateAction<APIDirectory[]>>;
 };
 
 export const DriveContext = createContext<TDriveContext>({
   allDirectories: [],
-  setAllDirectories: (value) => {},
+  setAllDirectories: () => { /* do nothing */ },
 });
 
 const DriveProvider: FC<PropsWithChildren> = ({ children }) => {
   const [allDirs, setAllDirs] = useState<APIDirectory[]>([]);
 
   useEffect(() => {
-    getAllDirs().then(setAllDirs);
+    void getAllDirs().then(setAllDirs);
   }, []);
 
   return (

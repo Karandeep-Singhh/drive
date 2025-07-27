@@ -7,7 +7,7 @@ import { useDrive } from "~/components/Drive/DriveProvider/useDrive";
 import React from "react";
 
 interface BreadcrumbsProps {
-    currentDirId: number;
+    currentDirId: string;
 }
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({ currentDirId }) => {

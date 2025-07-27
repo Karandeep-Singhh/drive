@@ -6,7 +6,7 @@ export const useDrive = () => {
   const { allDirectories, setAllDirectories } = useContext(DriveContext);
 
   // TODO optimize using map
-  const getBreadCrumbOrderDirs = (currentDirId: number): APIDirectory[] => {
+  const getBreadCrumbOrderDirs = (currentDirId: string): APIDirectory[] => {
     const currentDir = allDirectories.find((d) => d.id === currentDirId);
     if (!currentDir) return [];
 

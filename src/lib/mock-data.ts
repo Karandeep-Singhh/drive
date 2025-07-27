@@ -1,3 +1,5 @@
+import type { DriveItem } from "~/service/types";
+
 export type FileType =
   | "directory"
   | "document"
@@ -9,18 +11,6 @@ export type FileType =
   | "audio"
   | "archive"
   | "code";
-
-export interface DriveItem {
-  id: number;
-  name: string;
-  type: FileType;
-  size?: number;
-  owner: string;
-  lastModified?: string;
-  starred?: boolean;
-  parentDirId?: number;
-  shared?: boolean;
-}
 
 // Storage quota mock data
 export const storageQuota = {

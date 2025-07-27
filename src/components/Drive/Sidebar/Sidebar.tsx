@@ -1,21 +1,17 @@
 "use client";
 
 import type { FC } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Plus,
-  Clock,
-  Share2,
-  Star,
-  Trash2,
-  HardDrive,
-  FileQuestion,
-  FolderPlus,
-} from "lucide-react";
+import { Plus, Clock, Share2, Star, Trash2, HardDrive, FileQuestion, FolderPlus } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
-import { formatBytes, storageQuota } from "~/lib/mock-data";
+import { formatBytes } from "~/lib/utils";
+import Link from "next/link";
+
+const storageQuota = {
+  used: 10 * 1024 * 1024 * 1024, // 10 GB
+  total: 15 * 1024 * 1024 * 1024, // 15 GB
+};
 
 type Props = {
   isOpen: boolean;

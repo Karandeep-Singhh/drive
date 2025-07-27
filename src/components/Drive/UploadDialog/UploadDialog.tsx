@@ -40,7 +40,7 @@ const UploadDialog: FC<Props> = ({
     e.preventDefault();
     const files = Array.from(e.dataTransfer.files);
     addFilesToUpload(files, currentDirectory?.id);
-  }, []);
+  }, [addFilesToUpload, currentDirectory?.id]);
 
   const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -77,7 +77,7 @@ const UploadDialog: FC<Props> = ({
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>
-            Upload files to {currentDirectory?.name || "My Drive"}
+            Upload files to {currentDirectory?.name ?? "My Drive"}
           </DialogTitle>
         </DialogHeader>
 
@@ -113,7 +113,7 @@ const UploadDialog: FC<Props> = ({
                 </Button>
               </div>
               <div className="grid max-h-[200px] gap-2 overflow-y-auto">
-                {uploadQueue.map((uploadItem, index) => (
+                {uploadQueue.map((uploadItem, _index) => (
                   <div key={uploadItem.id} className="border p-2">
                     <div className="flex items-center justify-between rounded-lg">
                       <div className="flex items-center gap-2">
