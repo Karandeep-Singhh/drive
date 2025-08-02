@@ -10,7 +10,7 @@ const config = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://13.62.37.89/drive-clone/:path*'
+        destination: 'https://api.projects.karandeep.in/drive-clone/:path*'
       }
     ]
   }
