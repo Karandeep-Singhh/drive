@@ -1,7 +1,7 @@
 import axios, { type AxiosResponse } from "axios";
 
 export const http = axios.create({
-    baseURL: "https://drive-0x45.netlify.app/api",
+    baseURL: "https://api.projects.karandeep.in/drive-clone",
     withCredentials: true
 });
 
