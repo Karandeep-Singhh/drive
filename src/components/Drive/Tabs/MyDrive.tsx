@@ -47,6 +47,10 @@ const MyDrive: FC<Props> = ({ currentDirectoryId }) => {
     setFilesUnderDir(files);
   }, [currentDirectoryId]);
 
+  const refresh = useCallback(() => {
+    getFilesAndDirs();
+  }, [getFilesAndDirs]);
+
   useEffect(() => {
     getFilesAndDirs();
   }, [allDirectories, currentDirectoryId, getFilesAndDirs]);
@@ -73,14 +77,14 @@ const MyDrive: FC<Props> = ({ currentDirectoryId }) => {
           <AddDirectoryInput currentDirId={currentDirectoryId} />
           <UploadDialog
             open={uploadDialogOpen}
-            onUploadDone={getFilesAndDirs}
+            onUploadDone={refresh}
             onOpenChange={setUploadDialogOpen}
             currentDirectory={currentDir}
           />
         </div>
       </div>
 
-      <FileTable tableData={tableData} />
+      <FileTable tableData={tableData} onDelete={refresh} />
     </Suspense>
   );
 };

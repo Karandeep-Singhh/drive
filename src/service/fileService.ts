@@ -55,3 +55,7 @@ export const downloadFile = (blobRef: string): Promise<void> => {
             window.URL.revokeObjectURL(href);
         });
 };
+
+export const deleteFile = (blobRef: string): Promise<void> => {
+    return http.delete("/v1/files/" + blobRef).then(() => {});
+};

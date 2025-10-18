@@ -1,17 +1,22 @@
-export type APIDirectory = {
+type BaseItem = {
   id: string;
   name: string;
+  size?: number;
+  shared?: boolean;
+  sharedBy?: User
+  owner: string //TODO change to User
+  starred?: boolean;
   parentDirId?: string;
   lastModified?: string;
+}
+
+export type APIDirectory = BaseItem & {
+  type: "directory";
 };
 
-export type APIFile = {
-  id: string;
-  name: string;
+export type APIFile = BaseItem & {
   blobRef: string;
-  size?: number;
-  parentDirId?: string;
-  lastModified?: string;
+  type: FileType;
 };
 
 export type UploadFilePayload = {
@@ -32,17 +37,12 @@ export type FileType =
   | "archive"
   | "code"
 
-export type DriveItem = {
-  id: string;
-  name: string;
-  type: FileType;
-  size?: number;
-  owner: string;
-  lastModified?: string;
-  starred?: boolean;
-  parentDirId?: string;
-  shared?: boolean;
-}
+export type DriveItem = APIFile | APIDirectory
+  
+
+export const isFile = (item: DriveItem): item is APIFile  => {
+  return item.type !== "directory";
+};
 
 export type User = {
   id: string

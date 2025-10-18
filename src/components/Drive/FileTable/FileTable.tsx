@@ -21,14 +21,17 @@ import {
 import { Badge } from "~/components/ui/badge";
 import { formatBytes } from "~/lib/utils";
 import { getFileIcon } from "~/lib/file-icons";
-import { downloadFile } from "~/service/fileService";
-import type { APIFile, DriveItem } from "~/service/types";
+import { deleteFile, downloadFile } from "~/service/fileService";
+import { isFile, type APIFile, type DriveItem } from "~/service/types";
+import { deleteDir } from "~/service/dirService";
+import { on } from "events";
 
 type Props = {
     tableData: DriveItem[];
+    onDelete: () => void
 };
 
-const FileTable: FC<Props> = ({ tableData }) => {
+const FileTable: FC<Props> = ({ tableData, onDelete }) => {
     const router = useRouter();
 
     const formatDate = (date: Date) => {
@@ -48,6 +51,14 @@ const FileTable: FC<Props> = ({ tableData }) => {
 
     const handleDownload = (file: DriveItem) => () => {
         downloadFile((file as any).blobRef);
+    }
+
+    const handleDelete = (file: DriveItem) => {
+        if (isFile(file)) {
+            deleteFile(file.blobRef).then(onDelete);
+        } else {
+            deleteDir(file.id).then(onDelete);
+        }
     }
 
     return (
@@ -140,7 +151,7 @@ const FileTable: FC<Props> = ({ tableData }) => {
                                                 <DropdownMenuItem>Share</DropdownMenuItem>
                                                 <DropdownMenuItem>Move</DropdownMenuItem>
                                                 <DropdownMenuItem>Rename</DropdownMenuItem>
-                                                <DropdownMenuItem className="text-destructive">
+                                                <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(file)}>
                                                     Delete
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>

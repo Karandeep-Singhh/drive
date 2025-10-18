@@ -19,3 +19,7 @@ export const createDir = (newDirName: string, parentDirId?: string): Promise<API
     })
     .then((res: AxiosResponse<APIDirectory>) => getData(res));
 };
+
+export const deleteDir = (dirId: string): Promise<void> => {
+  return http.delete(`/v1/directories/${dirId}`).then(() => {});
+};
