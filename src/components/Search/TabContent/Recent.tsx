@@ -13,7 +13,7 @@ const Recent = () => {
         </p>
       </div>
       <div className="relative overflow-auto">
-        <FileTable tableData={[]} />
+        {/* <FileTable tableData={[]} /> */}
       </div>
     </>
   );

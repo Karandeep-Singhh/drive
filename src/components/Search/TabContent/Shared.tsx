@@ -13,7 +13,7 @@ const Shared: FC = () => {
         </p>
       </div>
       <div className="relative overflow-auto">
-        <FileTable parentId={null} />
+        {/* <FileTable parentId={null} /> */}
       </div>
     </>
   );

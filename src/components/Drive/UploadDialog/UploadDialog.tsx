@@ -27,7 +27,6 @@ const UploadDialog: FC<Props> = ({
   currentDirectory,
   onUploadDone,
 }) => {
-  console.log("current dir", currentDirectory);
   const {
     uploadQueue,
     addFilesToUpload,
