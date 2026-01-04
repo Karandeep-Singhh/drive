@@ -46,7 +46,7 @@ const DriveItemRow: FC<Props> = ({
       }}
     >
       <TableCell className="font-medium">
-        {isFileItem ? <FileThumbnail file={item} /> : getFolderIcon()}
+        {isFileItem ? <FileThumbnail file={item} /> : <div className="flex gap-2 items-center">{getFolderIcon()} <span>{item.name}</span></div>}
       </TableCell>
       <TableCell>{item.owner}</TableCell>
       <TableCell>
