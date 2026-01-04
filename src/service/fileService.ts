@@ -7,6 +7,10 @@ export const getAllFilesUnderDir = (dirId?: string): Promise<APIFile[]> => {
     return http.get<APIFile[]>(`/v1/files${queryParam}`).then((res) => getData(res));
 };
 
+export const getFilePreview = (fileId: string): Promise<Blob> => {
+    return http.get<Blob>("/v1/files/" + fileId + "/preview", { responseType: "blob" }).then(getData)
+}
+
 export const uploadFile = (
     payload: UploadFilePayload,
     onProgressChange: (p: number) => void,
@@ -31,9 +35,9 @@ export const uploadFile = (
         .then((res) => getData(res));
 };
 
-export const downloadFile = (blobRef: string): Promise<void> => {
+export const downloadFile = (fileId: string): Promise<void> => {
     return http
-        .get("/v1/files/" + blobRef, { responseType: "blob" })
+        .get("/v1/files/" + fileId + "/download", { responseType: "blob" })
         .then((res) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const header = res.headers["content-disposition"];

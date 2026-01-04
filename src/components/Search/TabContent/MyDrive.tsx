@@ -79,7 +79,7 @@ const MyDrive: FC = () => {
           </Dialog>
         </div>
       </div>
-      <FileTable parentId="root" />
+      <FileTable tableData={[]} onDelete={console.log}/>
     </>
   );
 };

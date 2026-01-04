@@ -26,13 +26,12 @@ const MyDrive: FC<Props> = ({ currentDirectoryId }) => {
 
   const dirs: DriveItem[] = dirsUnderCurrentDir.map((e: APIDirectory) => ({
     ...e,
-    type: "directory",
+    type: "Directory",
     owner: "Me",
   }));
 
   const files: DriveItem[] = filesUnderDir.map((e: APIFile) => ({
     ...e,
-    type: "file", //change it via file type from metadata
     owner: "Me",
   }));
 
